@@ -42,10 +42,7 @@ func (ll *Lanes) setFrame() {
 // FallTo Lanesを落下させる
 func (ll Lanes) FallTo(offset int) {
 	for _, lane := range ll.lanes {
-		// 上部にスペースを入れて擬似的に落下しているように見せている
-		lane.Flex.Clear()
-		lane.Flex.AddItem(tview.NewBox(), offset, 1, false)
-		lane.Flex.AddItem(lane.Box, 1, 1, false)
+		lane.fallTo(offset)
 	}
 }
 
@@ -80,4 +77,12 @@ func newFlex(box *tview.Box) *tview.Flex {
 // newFrame Frameを初期化する
 func newFrame(note *tview.Flex) *tview.Frame {
 	return tview.NewFrame(note).SetBorders(0, 0, 0, 0, 1, 1)
+}
+
+// fallTo Laneを落下させる
+func (l Lane) fallTo(offset int) {
+	// 上部にスペースを入れて擬似的に落下しているように見せている
+	l.Flex.Clear()
+	l.Flex.AddItem(tview.NewBox(), offset, 1, false)
+	l.Flex.AddItem(l.Box, 1, 1, false)
 }
