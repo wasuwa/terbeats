@@ -32,21 +32,10 @@ func NewGameUI(app *tview.Application) tview.Primitive {
 			position += 1
 
 			app.QueueUpdateDraw(func() {
-				lane1.Flex.Clear()
-				lane2.Flex.Clear()
-				lane3.Flex.Clear()
-				lane4.Flex.Clear()
-
-				// ノーツの前に空白のスペースを挿入
-				lane1.Flex.AddItem(tview.NewBox(), position, 1, false)
-				lane2.Flex.AddItem(tview.NewBox(), position, 1, false)
-				lane3.Flex.AddItem(tview.NewBox(), position, 1, false)
-				lane4.Flex.AddItem(tview.NewBox(), position, 1, false)
-
-				lane1.Flex.AddItem(lane1.Box, 1, 1, false)
-				lane2.Flex.AddItem(lane2.Box, 1, 1, false)
-				lane3.Flex.AddItem(lane3.Box, 1, 1, false)
-				lane4.Flex.AddItem(lane4.Box, 1, 1, false)
+				lane1.FallTo(position)
+				lane2.FallTo(position)
+				lane3.FallTo(position)
+				lane4.FallTo(position)
 			})
 
 			if isPositionBottom(wrapper, position) {

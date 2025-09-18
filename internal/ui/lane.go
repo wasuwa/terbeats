@@ -37,3 +37,11 @@ func newFlex(box *tview.Box) *tview.Flex {
 func newFrame(note *tview.Flex) *tview.Frame {
 	return tview.NewFrame(note).SetBorders(0, 0, 0, 0, 1, 1)
 }
+
+// FallTo 落下する
+func (l *Lane) FallTo(offset int) {
+	// 上部にスペースを入れて擬似的に落下しているように見せている
+	l.Flex.Clear()
+	l.Flex.AddItem(tview.NewBox(), offset, 1, false)
+	l.Flex.AddItem(l.Box, 1, 1, false)
+}
