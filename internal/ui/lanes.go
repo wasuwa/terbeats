@@ -55,28 +55,28 @@ type Lane struct {
 
 // newLane Laneを初期化する
 func newLane() Lane {
-	b := newBox()
-	f := newFlex(b)
-	fr := newFrame(f)
-	return Lane{Box: b, Flex: f, Frame: fr}
+	l := Lane{}
+	l.setBox()
+	l.setFlex()
+	l.setFrame()
+	return l
 }
 
-// newBox Boxを初期化する
-func newBox() *tview.Box {
-	return tview.NewBox().SetBackgroundColor(tcell.ColorWhite)
+// setBox Boxをセットする
+func (l *Lane) setBox() {
+	l.Box = tview.NewBox().SetBackgroundColor(tcell.ColorWhite)
 }
 
-// newFlex Flexを初期化する
-func newFlex(box *tview.Box) *tview.Flex {
-	note := tview.NewFlex().
+// setFlex Flexをセットする
+func (l *Lane) setFlex() {
+	l.Flex = tview.NewFlex().
 		SetDirection(tview.FlexRow).
-		AddItem(box, 1, 1, false)
-	return note
+		AddItem(l.Box, 1, 1, false)
 }
 
-// newFrame Frameを初期化する
-func newFrame(note *tview.Flex) *tview.Frame {
-	return tview.NewFrame(note).SetBorders(0, 0, 0, 0, 1, 1)
+// setFrame Frameをセットする
+func (l *Lane) setFrame() {
+	l.Frame = tview.NewFrame(l.Flex).SetBorders(0, 0, 0, 0, 1, 1)
 }
 
 // fallTo Laneを落下させる
