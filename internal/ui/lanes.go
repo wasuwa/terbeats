@@ -32,10 +32,7 @@ func (ll *Lanes) setLanes(laneCount int) {
 func (ll *Lanes) setFrame() {
 	flex := tview.NewFlex().SetDirection(tview.FlexColumn)
 	for _, lane := range ll.lanes {
-		flexible := 0
-		original := 1
-		notFocus := false
-		flex = flex.AddItem(lane.Frame, flexible, original, notFocus)
+		flex = flex.AddItem(lane.Frame, 0, 1, false)
 	}
 	// 外枠（左右の余白確保）
 	space := 10
