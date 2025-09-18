@@ -6,24 +6,14 @@ import (
 	"github.com/rivo/tview"
 )
 
-// NewGameUI ゲームUIを初期化する
-func NewGameUI(app *tview.Application) tview.Primitive {
-	// レーン生成
-	lane1 := NewLane()
-	lane2 := NewLane()
-	lane3 := NewLane()
-	lane4 := NewLane()
+const (
+	// laneCount 画面に表示するレーンの数
+	laneCount = 4
+)
 
-	// レーン群のレイアウト（横並び）
-	notes := tview.NewFlex().
-		SetDirection(tview.FlexColumn).
-		AddItem(lane1.Frame, 0, 1, false).
-		AddItem(lane2.Frame, 0, 1, false).
-		AddItem(lane3.Frame, 0, 1, false).
-		AddItem(lane4.Frame, 0, 1, false)
-
-	// 外枠（左右の余白確保）
-	wrapper := tview.NewFrame(notes).SetBorders(1, 1, 0, 0, 2, 2)
+// NewGame ゲームを初期化する
+func NewGame(app *tview.Application) tview.Primitive {
+	lanes := newLanes(laneCount)
 
 	// アニメーション（落下）
 	position := 0
@@ -32,13 +22,10 @@ func NewGameUI(app *tview.Application) tview.Primitive {
 			position += 1
 
 			app.QueueUpdateDraw(func() {
-				lane1.FallTo(position)
-				lane2.FallTo(position)
-				lane3.FallTo(position)
-				lane4.FallTo(position)
+				lanes.FallTo(position)
 			})
 
-			if isPositionBottom(wrapper, position) {
+			if isPositionBottom(lanes.frame, position) {
 				break
 			}
 
@@ -46,11 +33,11 @@ func NewGameUI(app *tview.Application) tview.Primitive {
 		}
 	}()
 
-	return wrapper
+	return lanes.frame
 }
 
 // isPositionBottom 下部か判定する
 func isPositionBottom(root *tview.Frame, position int) bool {
 	_, _, _, screenHeight := root.GetRect()
-	return position > screenHeight-3
+	return position > screenHeight-2
 }

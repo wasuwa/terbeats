@@ -7,7 +7,7 @@ import (
 
 func main() {
 	app := tview.NewApplication()
-	root := ui.NewGameUI(app)
+	root := ui.NewGame(app)
 	if err := app.SetRoot(root, true).Run(); err != nil {
 		panic(err)
 	}
